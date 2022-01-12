@@ -1,4 +1,4 @@
-pillow==7.2.0
+pillow==2.0.0
 beautifulsoup4
 requests
 flask
