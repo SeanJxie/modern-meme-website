@@ -5,37 +5,30 @@ This script makes memes that conform to the modern standard of humor.
 
 from PIL import Image, ImageDraw, ImageFont
 from bs4 import BeautifulSoup
-import flask
 import requests
 
 import io
 import random
 import base64
+import string
 
 import templates
 
+
 def get_random_image():
-    # Slow. But, this will do for now...
+    tempchar = [random.choice(string.ascii_letters + string.digits) for _ in range(5)]
+    url = "http://i.imgur.com/" + "".join(tempchar) + ".png"
 
-    url = "https://flrig.beesbuzz.biz/"
-    page_resp = requests.get(url)
-
-    parser1 = BeautifulSoup(page_resp.content, "html.parser")
-    href_tags = list(filter(lambda s: "https://www.flickr.com/" in s, map(lambda t: t["href"], parser1.find_all("a"))))
-    
-    href_resp = requests.get(random.choice(href_tags))
-    parser2 = BeautifulSoup(href_resp.content, "html.parser")
-    img_tag = parser2.find("img")
-
-    if img_tag is None:
-        return get_random_image()
-
-    img_resp = requests.get("https:" + img_tag["src"])
+    img_resp = requests.get(url)
 
     img = Image.open(io.BytesIO(img_resp.content)).convert("RGBA")
+
+    if img.size == (161, 81): # hard code the removed image
+        return get_random_image()
+
     min_res = min(img.size)
+
     if min_res < 1000:
-        print("HERE:", min_res)
         scale = int(1000 / min_res)
         img = img.resize((img.size[0] * scale, img.size[1] * scale))
 
@@ -50,7 +43,6 @@ def overlay_meme_text(img: Image, top: str, bottom: str):
 
     # Top
     _, txtHtTop = d.textsize(top, font=font) 
-    print(img.size)
     d.text((imWt / 2, txtHtTop / 2), top, fill="black", font=font, anchor="mm", stroke_width=2) # outline
     d.text((imWt / 2, txtHtTop / 2), top, fill="white", font=font, anchor="mm")
 
