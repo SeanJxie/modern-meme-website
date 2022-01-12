@@ -16,21 +16,33 @@ import templates
 
 
 def get_random_image():
-    tempchar = [random.choice(string.ascii_letters + string.digits) for _ in range(5)]
-    url = "http://i.imgur.com/" + "".join(tempchar) + ".png"
 
-    img_resp = requests.get(url)
+    image_found = False
 
-    img = Image.open(io.BytesIO(img_resp.content)).convert("RGBA")
+    while not image_found:
 
-    if img.size == (161, 81): # hard code the removed image
-        return get_random_image()
+        tempchar = [random.choice(string.ascii_letters + string.digits) for _ in range(5)]
+        url = "http://i.imgur.com/" + "".join(tempchar) + ".png"
+
+        img_resp = requests.get(url)
+        img = Image.open(io.BytesIO(img_resp.content)).convert("RGBA")
+
+        if img.size == (161, 81): # hard code the removed image
+            pass
+        elif img.size[0]*100 < img.size[1] or img.size[1]*100 < img.size[0]: # make sure the aspect ratio of the image isn't really weird
+            pass
+        else:
+            image_found = True
 
     min_res = min(img.size)
+    max_res = max(img.size)
 
     if min_res < 1000:
         scale = int(1000 / min_res)
         img = img.resize((img.size[0] * scale, img.size[1] * scale))
+    elif max_res > 2000:
+        scale = 2000 / min_res
+        img = img.resize((int(img.size[0] * scale), int(img.size[1] * scale)))
 
     return img
 
