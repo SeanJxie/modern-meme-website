@@ -5,6 +5,7 @@ This script makes memes that conform to the modern standard of humor.
 
 from PIL import Image, ImageDraw, ImageFont
 from bs4 import BeautifulSoup
+import flask
 import requests
 
 import io
@@ -24,7 +25,7 @@ def get_random_image():
 
     parser = BeautifulSoup(page_resp.content, "html.parser")
     img_tag = parser.find("img", {"class": "lazy thumbnail"})
-
+    print(parser.text)
     if img_tag == None:
         return Image.new("RGB", (100, 100))
 
