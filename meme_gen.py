@@ -21,10 +21,12 @@ def get_random_image():
         return get_random_image()
 
     parser = BeautifulSoup(page_resp.content, "html.parser")
+    img_tag = parser.find("img", {"class": "lazy thumbnail"})
 
+    if img_tag == None:
+        return get_random_image()
 
-    img_url = parser.find("img", {"class": "lazy thumbnail"})["data-src"]
-    img_resp = requests.get(img_url)
+    img_resp = requests.get(img_tag["data-src"])
 
     return Image.open(io.BytesIO(img_resp.content))
 
