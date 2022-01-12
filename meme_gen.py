@@ -24,7 +24,7 @@ def get_random_image():
     img_tag = parser.find("img", {"class": "lazy thumbnail"})
 
     if img_tag == None:
-        return get_random_image()
+        return Image.new("RGB", (100, 100))
 
     img_resp = requests.get(img_tag["data-src"])
 
