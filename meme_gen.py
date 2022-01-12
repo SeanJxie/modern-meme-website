@@ -9,6 +9,7 @@ import requests
 
 import io
 import random
+import base64
 
 import templates
 
@@ -51,37 +52,36 @@ def overlay_meme_text(img: Image, top: str, bottom: str):
     return img
 
 def get_random_top_bottom():
-    rnd_tmp = templates.text[random.randint(0, len(templates.text) - 1)]
+    rnd_tmp = random.choice(templates.text)
 
     rnd_top = rnd_tmp["top"].replace(
-        "[_NOUN]", templates.nouns[random.randint(0, len(templates.nouns) - 1)]
+        "[_NOUN]", random.choice(templates.nouns)
             ).replace(
-            "[_ADJ]", templates.adjectives[random.randint(0, len(templates.adjectives) - 1)]
+            "[_ADJ]", random.choice(templates.adjectives)
             ).replace(
-            "[_PNOUN]", templates.plural_nouns[random.randint(0, len(templates.plural_nouns) - 1)]
+            "[_PNOUN]", random.choice(templates.plural_nouns)
             ).replace(
-            "[_VERB]", templates.verbs[random.randint(0, len(templates.verbs) - 1)]
+            "[_VERB]", random.choice(templates.verbs)
             )
 
     rnd_bot = rnd_tmp["bot"].replace(
-        "[_NOUN]", templates.nouns[random.randint(0, len(templates.nouns) - 1)]
+        "[_NOUN]", random.choice(templates.nouns)
             ).replace(
-            "[_ADJ]", templates.adjectives[random.randint(0, len(templates.adjectives) - 1)]
+            "[_ADJ]", random.choice(templates.adjectives)
             ).replace(
-            "[_PNOUN]", templates.plural_nouns[random.randint(0, len(templates.plural_nouns) - 1)]
+            "[_PNOUN]", random.choice(templates.plural_nouns)
             ).replace(
-            "[_VERB]", templates.verbs[random.randint(0, len(templates.verbs) - 1)]
+            "[_VERB]", random.choice(templates.verbs)
             )
 
     return rnd_top, rnd_bot
 
+def serve_pil_image(pil_img):
+    img_io = io.BytesIO()
+    pil_img.save(img_io, "PNG", quality=100)
+    img_io.seek(0)
+    img = base64.b64encode(img_io.getvalue()).decode("ascii")
+    return f'<img src="data:image/png;base64, {img}" id="meme-image"/>'
 
 def generate():
-    name = '/tmp/meme.png'
-
-    meme = overlay_meme_text(get_random_image(), *get_random_top_bottom())
-    meme.save(name, "PNG")
-    
-    print('meme generated.')
-
-    return name
+    return overlay_meme_text(get_random_image(), *get_random_top_bottom())

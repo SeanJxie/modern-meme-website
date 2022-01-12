@@ -7,25 +7,14 @@
 </head>
 <body>
 
-
-<a href=# id=btn>NEW MEME</a>
+<form action="/" method="get">
+    <button name="new-meme-button" type="submit" id="btn">NEW MEME</button>
+</form>
 
 <div id='meme-container'>
-    <img src='./tmp/meme.png' alt="Meme" id='meme-image'></image>
+    {{image|safe}}
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type=text/javascript>
-    $(function() {
-        $('a#btn').on('click', function(e) {
-            e.preventDefault()
-            $.getJSON('/background_process_test', function(data) {});
-            var url = './tmp/meme.png'
-            $("#meme-image").removeAttr("src").attr("src", url + '?' + new Date().getTime());
-            return false;
-        });
-    });
-</script>
 
 </body>
 </html>

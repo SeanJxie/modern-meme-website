@@ -5,13 +5,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    meme_gen.generate()
-    return render_template("index.html")
-
-@app.route('/background_process_test')
-def background_process_test():
-    meme_gen.generate()
-    return render_template("index.html")
+    new_img_tag = meme_gen.serve_pil_image(meme_gen.generate())
+    return render_template("index.html", image=new_img_tag)
 
 if __name__ == "__main__":
     app.run(debug=True)
