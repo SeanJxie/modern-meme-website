@@ -14,24 +14,32 @@ import base64
 
 import templates
 
-
 def get_random_image():
-    page_resp = requests.get("https://www.generatormix.com/random-image-generator")
+    # Slow. But, this will do for now...
 
-    print("Page response status:", page_resp.status_code)
+    url = "https://flrig.beesbuzz.biz/"
+    page_resp = requests.get(url)
 
-    if page_resp.content == None:
+    parser1 = BeautifulSoup(page_resp.content, "html.parser")
+    href_tags = list(filter(lambda s: "https://www.flickr.com/" in s, map(lambda t: t["href"], parser1.find_all("a"))))
+    
+    href_resp = requests.get(random.choice(href_tags))
+    parser2 = BeautifulSoup(href_resp.content, "html.parser")
+    img_tag = parser2.find("img")
+
+    if img_tag is None:
         return get_random_image()
 
-    parser = BeautifulSoup(page_resp.content, "html.parser")
-    img_tag = parser.find("img", {"class": "lazy thumbnail"})
-    print(parser.text)
-    if img_tag == None:
-        return Image.new("RGB", (100, 100))
+    img_resp = requests.get("https:" + img_tag["src"])
 
-    img_resp = requests.get(img_tag["data-src"])
+    img = Image.open(io.BytesIO(img_resp.content)).convert("RGBA")
+    min_res = min(img.size)
+    if min_res < 1000:
+        print("HERE:", min_res)
+        scale = int(1000 / min_res)
+        img = img.resize((img.size[0] * scale, img.size[1] * scale))
 
-    return Image.open(io.BytesIO(img_resp.content))
+    return img
 
 
 def overlay_meme_text(img: Image, top: str, bottom: str):
@@ -42,7 +50,7 @@ def overlay_meme_text(img: Image, top: str, bottom: str):
 
     # Top
     _, txtHtTop = d.textsize(top, font=font) 
-
+    print(img.size)
     d.text((imWt / 2, txtHtTop / 2), top, fill="black", font=font, anchor="mm", stroke_width=2) # outline
     d.text((imWt / 2, txtHtTop / 2), top, fill="white", font=font, anchor="mm")
 

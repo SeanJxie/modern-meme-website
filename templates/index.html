@@ -7,9 +7,8 @@
 </head>
 <body>
 
-<form action="/" method="get">
-    <button name="new-meme-button" type="submit" id="btn">NEW MEME</button>
-</form>
+<form action="/" method="get" id="btnform"></form>
+<button name="new-meme-button" type="submit" form="btnform" id="btn">NEW MEME</button>
 
 <div id='meme-container'>
     {{image|safe}}
