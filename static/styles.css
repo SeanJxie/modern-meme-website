@@ -1,14 +1,36 @@
 body {
     background-color: rgb(177, 219, 255);
+    text-align: center;
+    padding: 1em;
+}
+
+#meme-image{
+    max-height: 45vw;
+    border: solid;
+    border-color: rgb(217, 237, 255);
+    border-width: 5px;
+    border-radius: 10px;
+    margin: 25px;
 }
 
 #btn {
-    background-color: rgba(59, 114, 163, 0.342);
-    padding: 5px;
+    line-height: 1;
+    text-decoration: none;
+    background-color: rgba(59, 114, 163, 0.3);
+    padding: 10px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 50px;
+    color: black;
+    transition: 0.2s;
+    border-radius: 10px;
 }
 
 #btn:hover {
-    background-color: rgba(36, 69, 97, 0.308);
+    background-color: rgba(36, 69, 97, 0.6);
+    padding: 4px;
+    color: white;
+}
+
+#btn:active {
+    padding: 2px;
 }
