@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Modern Meme</title>
-    <link rel="stylesheet" href="./static/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
 
@@ -21,7 +21,7 @@
             e.preventDefault()
             $.getJSON('/background_process_test', function(data) {});
             var url = '/tmp/meme.png'
-            $("#meme-image").removeAttr("src").attr("src", url + '?' + new Date().getTime());
+            $("#meme-image").removeAttr("src").attr("src", url);
             return false;
         });
     });
