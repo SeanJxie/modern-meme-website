@@ -15,8 +15,13 @@ import templates
 import os
 
 def get_random_image():
-    page_resp = requests.get("https://www.generatormix.com/random-image-generator")
+    page_resp = requests.get("https://www.generatormix.com/random-image-generator", timeout=4.0)
+
+    if page_resp.content == None:
+        return get_random_image()
+
     parser = BeautifulSoup(page_resp.content, "html.parser")
+
 
     img_url = parser.find("img", {"class": "lazy thumbnail"})["data-src"]
     img_resp = requests.get(img_url)
