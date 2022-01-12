@@ -1,0 +1,15 @@
+{
+    "version": "1.0.0",
+    "builds": [
+        {
+            "src": "*.py",
+            "use": ""
+        }
+    ],
+    "routes": [
+        {
+            "src": "(.*)",
+            "dest": "flask_app.py"
+        }
+    ]
+  }
