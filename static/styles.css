@@ -4,7 +4,37 @@ body {
     padding: 1em;
 }
 
+#btn-container {
+    display: inline-block;
+    min-width: 284px;
+    min-height: 75px;
+    user-select: none;
+}
+
+#btn-container #btn {
+    cursor: pointer;
+    line-height: 1;
+    background-color: rgba(59, 114, 163, 0.4);
+    padding: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 50px;
+    color: rgb(0, 0, 90);
+    transition: 0.1s;
+    border-color:rgb(222, 222, 255) rgb(0, 0, 90) rgb(0, 0, 90) rgb(222, 222, 255); /* top right bottom left */
+    border-radius: 10px;
+}
+#btn-container:hover #btn {
+    /*background-color: rgba(59, 114, 163, 0.8);*/
+    padding: 4px;
+    border-color: white;
+    color: white;
+}
+#btn-container:active #btn {
+    padding: 2px;
+}
+
 #meme-image{
+    position: static;
     max-height: 45vw;
     border: solid;
     border-color: rgb(217, 237, 255);
@@ -13,24 +43,24 @@ body {
     margin: 25px;
 }
 
-#btn {
+#warning {
+    user-select: none;
     line-height: 1;
-    text-decoration: none;
-    background-color: rgba(59, 114, 163, 0.3);
-    padding: 10px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 50px;
-    color: black;
-    transition: 0.2s;
-    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+    padding: 1em;
+    /* background: repeating-linear-gradient(45deg, blue 0 20px, red 20px 40px); */
+    background: repeating-linear-gradient(45deg, rgba(255, 214, 138, 0.5) 0 10px, rgba(255, 181, 112, 0.5) 10px 20px); 
+    border: solid orangered 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-#btn:hover {
-    background-color: rgba(36, 69, 97, 0.6);
-    padding: 4px;
-    color: white;
+#warning h2 {
+    color: orangered;
+    margin: 0.5em;
 }
-
-#btn:active {
-    padding: 2px;
+#warning p {
+    color: orangered;
+    margin: 0.1em
 }
