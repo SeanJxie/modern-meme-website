@@ -5,6 +5,7 @@ body {
 }
 
 #meme-image{
+    position: static;
     max-height: 45vw;
     border: solid;
     border-color: rgb(217, 237, 255);
@@ -26,6 +27,7 @@ body {
 }
 
 #btn:hover {
+    cursor: pointer;
     background-color: rgba(36, 69, 97, 0.6);
     padding: 4px;
     color: white;
@@ -33,4 +35,26 @@ body {
 
 #btn:active {
     padding: 2px;
+}
+
+#warning {
+    user-select: none;
+    line-height: 1;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+    padding: 1em;
+    /* background: repeating-linear-gradient(45deg, blue 0 20px, red 20px 40px); */
+    background: repeating-linear-gradient(45deg, rgba(255, 214, 138, 0.5) 0 10px, rgba(255, 181, 112, 0.5) 10px 20px); 
+    border: solid orangered 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#warning h2 {
+    color: orangered;
+    margin: 0.5em;
+}
+#warning p {
+    color: orangered;
+    margin: 0.1em
 }
