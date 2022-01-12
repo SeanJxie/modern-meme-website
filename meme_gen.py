@@ -29,7 +29,7 @@ def get_random_image():
 
         if img.size == (161, 81): # hard code the removed image
             pass
-        elif img.size[0]*100 < img.size[1] or img.size[1]*100 < img.size[0]: # make sure the aspect ratio of the image isn't really weird
+        elif img.size[0]*2 < img.size[1] or img.size[1]*2 < img.size[0]: # make sure the aspect ratio of the image isn't really weird
             pass
         else:
             image_found = True
