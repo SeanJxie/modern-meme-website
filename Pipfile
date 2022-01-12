@@ -4,10 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
-beautifulsoup4 = "*"
-requests = "*"
 pillow = "*"
+bs4 = "*"
+requests = "*"
+flask = "*"
+
+[dev-packages]
 
 [requires]
 python_version = "3.9"
