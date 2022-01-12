@@ -77,7 +77,7 @@ def get_random_top_bottom():
 
 
 def generate():
-    name = '/tmp/meme.png'
+    name = './tmp/meme.png'
 
     meme = overlay_meme_text(get_random_image(), *get_random_top_bottom())
     meme.save(name, "PNG")

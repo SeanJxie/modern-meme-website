@@ -11,7 +11,7 @@
 <a href=# id=btn>NEW MEME</a>
 
 <div id='meme-container'>
-    <img src='/tmp/meme.png' alt="Meme" id='meme-image'></image>
+    <img src='./tmp/meme.png' alt="Meme" id='meme-image'></image>
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -20,7 +20,7 @@
         $('a#btn').on('click', function(e) {
             e.preventDefault()
             $.getJSON('/background_process_test', function(data) {});
-            var url = '/tmp/meme.png'
+            var url = './tmp/meme.png'
             $("#meme-image").removeAttr("src").attr("src", url + '?' + new Date().getTime());
             return false;
         });
