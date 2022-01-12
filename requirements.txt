@@ -1,6 +1,6 @@
-pillow==8.3.1
-beautifulsoup4==4.9.3
-requests==2.26.0
-flask==2.0.1
-cowpy==1.0.3
+pillow
+beautifulsoup4
+requests
+flask
+cowpy
 dataclasses
