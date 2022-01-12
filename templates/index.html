@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modern Meme</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+
+<img src='static/meme.png' alt="Meme" id='meme-image'></image>
+
+<a href=# id=btn>NEW MEME</a>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+    $(function() {
+        $('a#btn').on('click', function(e) {
+            e.preventDefault()
+            $.getJSON('/background_process_test', function(data) {});
+            var url = 'static/meme.png'
+            $("#meme-image").removeAttr("src").attr("src", url + '?' + new Date().getTime());
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>
