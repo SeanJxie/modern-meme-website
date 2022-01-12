@@ -33,6 +33,9 @@ text = [
 
     {"top": "",
     "bot": "war crimes"},
+
+    {"top": "",
+    "bot": "[_NOUN] moment"}
 ]
 
 
