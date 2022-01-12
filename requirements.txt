@@ -1,6 +1,0 @@
-pillow==2.0.0
-beautifulsoup4
-requests
-flask
-cowpy
-dataclasses
