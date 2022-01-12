@@ -21,6 +21,18 @@ text = [
 
     {"top": "My [_PNOUN] are",
      "bot": "are [_VERB]"},
+
+    {"top": "This pic goes hard",
+     "bot": "feel free to screenshot"},
+
+    {"top": "",
+    "bot": "what"},
+
+    {"top": "I have committed several",
+    "bot": "war crimes"},
+
+    {"top": "",
+    "bot": "war crimes"},
 ]
 
 
