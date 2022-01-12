@@ -17,6 +17,8 @@ import templates
 def get_random_image():
     page_resp = requests.get("https://www.generatormix.com/random-image-generator", timeout=4.0)
 
+    print(page_resp.status_code)
+
     if page_resp.content == None:
         return get_random_image()
 
