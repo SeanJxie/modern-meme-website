@@ -40,7 +40,8 @@
     }
 
     async function add_meme_to_cache(){
-        if (cache.length < cache_min_length){
+        console.log(cache.length)
+        if (cache.length < cache_min_length && !clicked_already){ // so only generate when cache is short enough and when not already generating a meme for the current meme
             const result = await get_new_meme();
             cache.push(result)
         }
