@@ -43,10 +43,15 @@ body {
     margin: 25px;
 }
 
+#loading-icon{
+    left: 0;
+    margin: 25px;
+}
+
 #warning {
     user-select: none;
     line-height: 1;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: auto;

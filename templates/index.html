@@ -25,7 +25,7 @@
     $('#btnform').on('submit', function(e){ 
         e.preventDefault(); 
 
-        $('#meme-container').html("<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'>")
+        $('#meme-container').html("<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' id='loading-icon'>")
 
         $.ajax({ 
             url: '/new_meme', 
