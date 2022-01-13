@@ -8,6 +8,7 @@ pillow = "*"
 bs4 = "*"
 requests = "*"
 flask = "*"
+waitress = "*"
 
 [dev-packages]
 
