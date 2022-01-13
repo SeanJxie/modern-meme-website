@@ -47,7 +47,7 @@ body {
     user-select: none;
     line-height: 1;
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
     width: auto;
     padding: 1em;
