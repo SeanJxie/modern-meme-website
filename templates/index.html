@@ -40,7 +40,6 @@
     }
 
     async function add_meme_to_cache(){
-        console.log(cache.length)
         if (cache.length < cache_min_length && !clicked_already){ // so only generate when cache is short enough and when not already generating a meme for the current meme
             const result = await get_new_meme();
             cache.push(result)
@@ -53,7 +52,7 @@
         if (clicked_already){}
         else {
             clicked_already = true
-            document.getElementById('meme-container').innerHTML = "<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'>"
+            document.getElementById('meme-container').innerHTML = "<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' id='loading-icon'>"
             if (cache.length < 1){
                 const new_meme = await get_new_meme()
                 document.getElementById('meme-container').innerHTML = new_meme; 
@@ -70,8 +69,8 @@
     setInterval(add_meme_to_cache, cache_check_interval)
 </script>
 
-<div id='github-icon'>
-    <a href='https://github.com/SeanJxie/modern-meme-website/issues' title='Report issues here!'>
+<div id='github-icon-container'>
+    <a id='github-icon' href='https://github.com/SeanJxie/modern-meme-website/issues' title='Report issues here!'>
         <i class="fa fa-github" style="font-size:48px;color:white"></i>
     </a>
 </div>

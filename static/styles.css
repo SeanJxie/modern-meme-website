@@ -72,3 +72,10 @@ body {
 #warning:hover {
     opacity: 0.75;
 }
+
+#github-icon {
+    bottom: 0;
+}
+#github-icon:hover {
+    opacity: 0.75;
+}
