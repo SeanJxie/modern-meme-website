@@ -28,7 +28,11 @@
             req = new XMLHttpRequest();
             req.open('GET', '/new_meme');
             req.onload = function(){
-                resolve(JSON.parse(this.responseText).meme)
+                try{
+                    resolve(JSON.parse(this.responseText).meme)
+                } catch {
+                    console.log(this.responseText)
+                }
             }
             req.send();
         })
