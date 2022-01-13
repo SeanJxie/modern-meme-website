@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,13 +9,26 @@
 <body>
 
 <div id='btn-container'>
-    <form action="/" method="get" id="btnform"></form>
-    <button name="new-meme-button" type="submit" form="btnform" id="btn">NEW MEME</button>
-</div>
+    <form method="get" id="btnform"></form>
+    <button type="submit" form="btnform" id="btn">NEW MEME</button>
+</div> 
 
 <div id='meme-container'>
     {{image|safe}}
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+<script> 
+    $('#btnform').on('submit', function(e){ 
+        e.preventDefault(); 
+        $.ajax({ 
+            url: '/new_meme', 
+            success: function(data) { 
+                $('#meme-container').html(data.meme); 
+            } 
+        }); 
+    }); 
+</script>
 
 <div id='warning'>
     <h2>⚠ WARNING! ⚠</h2>
@@ -23,4 +37,3 @@
 </div>
 
 </body>
-</html>
