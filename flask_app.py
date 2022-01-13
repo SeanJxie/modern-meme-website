@@ -1,5 +1,4 @@
-from flask import Flask, render_template
-
+from flask import Flask, render_template, jsonify
 import threading
 
 import meme_gen
@@ -32,6 +31,17 @@ def index():
     else:
         return render_template("index.html")
 
+
+@app.route('/new_meme')
+def post_new_meme():
+    if len(image_cache) > 0: 
+        new_img_tag = meme_gen.serve_pil_image(image_cache[0])
+        image_cache.pop(0)
+    else:
+        new_img_tag = 'Meme'
+        
+    data = {'meme': new_img_tag}
+    return jsonify(data)
 
 if __name__ == "__main__":
     load_thread()
