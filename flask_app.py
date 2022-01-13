@@ -29,8 +29,8 @@ app_start = False
 
 @app.route('/')
 def index():
-    print(app_start)
     global app_start
+    print(app_start)
     if not app_start:
         print("start load")
         load_thread()
