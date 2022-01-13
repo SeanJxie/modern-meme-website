@@ -9,8 +9,7 @@
 <body>
 
 <div id='btn-container'>
-    <form method="get" id="btnform"></form>
-    <button type="submit" form="btnform" id="btn">NEW MEME</button>
+    <button type="submit" form="btnform" id="btn" onclick="replace_current_meme()">NEW MEME</button>
 </div> 
 
 <div id='final-meme'>
@@ -20,20 +19,53 @@
     </div>    
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <script> 
-    $('#btnform').on('submit', function(e){ 
-        e.preventDefault(); 
 
-        $('#meme-container').html("<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'>")
+    const cache = new Array;
+    const cache_min_length = 10;
+    const cache_check_interval = 1000; //milliseconds
 
-        $.ajax({ 
-            url: '/new_meme', 
-            success: function(data) { 
-                $('#meme-container').html(data.meme); 
-            } 
-        }); 
-    }); 
+    function get_new_meme(){
+        return new Promise(function (resolve, reject){
+            req = new XMLHttpRequest();
+            req.open('GET', '/new_meme');
+            req.onload = function(){
+                resolve(JSON.parse(this.responseText).meme)
+            }
+            req.send();
+        })
+    }
+
+    async function add_meme_to_cache(){
+        if (cache.length < cache_min_length){
+            const result = await get_new_meme();
+            cache.push(result)
+        }
+    }
+
+    // so you can't request more memes while we're already generating memes
+    var clicked_already = false
+
+    async function replace_current_meme(){
+        if (clicked_already){}
+        else {
+            clicked_already = true
+            document.getElementById('meme-container').innerHTML = "<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'>"
+            if (cache.length < 1){
+                const new_meme = await get_new_meme()
+                document.getElementById('meme-container').innerHTML = new_meme; 
+            }
+            else {
+                document.getElementById('meme-container').innerHTML = cache.shift();
+            }
+            clicked_already = false;
+        }
+    }
+    
+    // check every second if cache is not full enough, if so, generate some more memes.
+    // sometimes generates extras, but its okay
+    setInterval(add_meme_to_cache, cache_check_interval)
+
 </script>
 
 <div id='warning'>
