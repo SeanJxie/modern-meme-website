@@ -1,0 +1,103 @@
+{
+    "templates": [
+        {
+            "top": "Top Text",
+            "bot": "Bottom Text"
+        },
+
+        {
+            "top": "Don't care",
+            "bot": "Didn't ask"
+        },
+
+        {
+            "top": "[_NOUN]",
+            "bot": "Bottom Text"
+        },
+
+        {
+            "top": "Top Text",
+            "bot": "[_NOUN]"
+        },
+
+        {
+            "top": "Society",
+            "bot": "Bottom Text"
+        },
+
+        {
+            "top": "When the [_NOUN]",
+            "bot": "is [_ADJ]"
+        },
+
+        {
+            "top": "My [_NOUN] is",
+            "bot": "is [_ADJ]"
+        },
+
+        {
+            "top": "This pic goes hard",
+            "bot": "feel free to screenshot"
+        },
+
+        {
+            "top": "",
+            "bot": "what"
+        },
+
+        {
+            "top": "I have committed several",
+            "bot": "war crimes"
+        },
+
+        {
+            "top": "",
+            "bot": "[_NOUN] moment"
+        },
+
+        {
+            "top": "POV",
+            "bot": "when I eat my [_NOUN]"
+        },
+
+        {
+            "top": "POV",
+            "bot": "you are [_NOUN]"
+        },
+
+        {
+            "top": "POV",
+            "bot": "you are my [_NOUN]"
+        },
+
+        {
+            "top": "YOOOOO",
+            "bot": ""
+        },
+
+        {
+            "top": "I am",
+            "bot": "[_ADJ] [_NOUN]"
+        },
+
+        {
+            "top": "My [_ADJ] [_NOUN]",
+            "bot": "[_ADV] [_VERB]"
+        },
+
+        {
+            "top": "WHAT IT",
+            "bot": "HAPPENING"
+        },
+
+        {
+            "top": "I like to",
+            "bot": "[_VERB] [_NOUN]"
+        },
+
+        {
+            "top": "",
+            "bot": "THIS IS SO FIRE"
+        }
+    ]
+}
