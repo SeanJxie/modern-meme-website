@@ -9,7 +9,8 @@ app = Flask(__name__)
 #CACHE_LIMIT = 100
 image_cache = []
 threads = []
-N_THREADS = 5
+N_THREADS = 2
+
 
 def loader():
     while 1:
@@ -23,8 +24,15 @@ def load_thread():
         th.start()
 
 
+app_start = False
+
 @app.route('/')
 def index():
+    global app_start
+    if not app_start:
+        load_thread()
+        app_start = True
+
     if len(image_cache) > 0: 
         new_img_tag = meme_gen.serve_pil_image(image_cache[0])
         image_cache.pop(0)
@@ -34,5 +42,4 @@ def index():
 
 
 if __name__ == "__main__":
-    load_thread()
     app.run(debug=True, threaded=True)
