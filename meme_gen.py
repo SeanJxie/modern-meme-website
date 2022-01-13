@@ -4,7 +4,6 @@ This script makes memes that conform to the modern standard of humor.
 """
 
 from PIL import Image, ImageDraw, ImageFont
-from bs4 import BeautifulSoup
 import requests
 
 import io
@@ -13,7 +12,6 @@ import base64
 import string
 
 import templates
-
 
 def get_random_image():
     tempchar = [random.choice(string.ascii_letters + string.digits) for _ in range(5)]
