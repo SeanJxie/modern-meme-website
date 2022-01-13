@@ -3,6 +3,7 @@ This script makes memes that conform to the modern standard of humor.
 
 """
 
+from math import prod
 from PIL import Image, ImageDraw, ImageFont
 import requests
 
@@ -10,46 +11,59 @@ import io
 import random
 import base64
 import string
+import json
 
-import templates
+print("LOADING DATA")
+with open("nouns.txt") as nf:
+    nouns = nf.readlines()
+with open("adjectives.txt") as af:
+    adjectives = af.readlines()
+with open("verbs.txt") as vf:
+    verbs = vf.readlines()
+with open("adverbs.txt") as adf:
+    adverbs = adf.readlines()
+with open("text_templates.json") as jsonf:
+    templates = json.load(jsonf)["templates"]
+print("FINISHED LOADING DATA")
+
+MAX_IMG_RES = 1280 * 720
+MIN_IMG_RES = 640 * 480
+
+MAX_ASPECT = 4
+MIN_ASPECT = 1/4
+
+def _fetch_single_image():
+    tempchar = [random.choice(string.ascii_letters + string.digits) for _ in range(5)]
+    url = "http://i.imgur.com/" + "".join(tempchar) + ".png"
+    tmp = io.BytesIO(requests.get(url).content)
+    tmp.seek(0)
+    return Image.open(tmp)
+
 
 def get_random_image():
-
-    image_found = False
-
-    while not image_found:
-
-        tempchar = [random.choice(string.ascii_letters + string.digits) for _ in range(5)]
-        url = "http://i.imgur.com/" + "".join(tempchar) + ".png"
-
-        img_resp = requests.get(url)
-        img = Image.open(io.BytesIO(img_resp.content)).convert("RGBA")
-
-        if img.size == (161, 81): # hard code the removed image
-            pass
-        elif img.size[0]*2 < img.size[1] or img.size[1]*2 < img.size[0]: # make sure the aspect ratio of the image isn't really weird
-            pass
-        else:
-            image_found = True
-
-    min_res = min(img.size)
-    max_res = max(img.size)
-
-    if min_res < 1000:
-        scale = int(1000 / min_res)
-        img = img.resize((img.size[0] * scale, img.size[1] * scale))
-    elif max_res > 2000:
-        scale = 2000 / min_res
-        img = img.resize((int(img.size[0] * scale), int(img.size[1] * scale)))
-
-    return img
-
+    img = _fetch_single_image()
+    # hard code the "removed" image and filter files that don't fit our requirements
+    aspect = img.size[0]/img.size[1]
+    while img.size == (161, 81) or MIN_IMG_RES > prod(img.size) or prod(img.size) > MAX_IMG_RES or MIN_ASPECT > aspect or aspect > MAX_ASPECT:
+        img = _fetch_single_image()
+    return img.convert("RGBA")
 
 def overlay_meme_text(img: Image, top: str, bottom: str):
     imWt, imHt = img.size
-    
-    font = ImageFont.truetype("impact.ttf", 100) # This should be dynamic
     d = ImageDraw.Draw(img)
+
+    fontsize = 1 
+    img_fraction = random.uniform(0.6, 0.9) # get a little spicy with the font size
+
+    if len(top) > len(bottom):
+        larget_txt = top
+    else:
+        larget_txt = bottom
+
+    font = ImageFont.truetype("impact.ttf", fontsize)
+    while font.getsize(larget_txt)[0] < img_fraction * img.size[0]:
+        fontsize += 1
+        font = ImageFont.truetype("impact.ttf", fontsize)
 
     # Top
     _, txtHtTop = d.textsize(top, font=font) 
@@ -65,29 +79,30 @@ def overlay_meme_text(img: Image, top: str, bottom: str):
     return img
 
 def get_random_top_bottom():
-    rnd_tmp = random.choice(templates.text)
+    rnd_tmp = random.choice(templates)
 
     rnd_top = rnd_tmp["top"].replace(
-        "[_NOUN]", random.choice(templates.nouns)
+        "[_NOUN]", random.choice(nouns).lower()
             ).replace(
-            "[_ADJ]", random.choice(templates.adjectives)
+            "[_ADJ]", random.choice(adjectives).lower()
             ).replace(
-            "[_PNOUN]", random.choice(templates.plural_nouns)
+            "[_VERB]", random.choice(verbs).lower()
             ).replace(
-            "[_VERB]", random.choice(templates.verbs)
+            "[_ADV]", random.choice(adverbs).lower()
             )
 
     rnd_bot = rnd_tmp["bot"].replace(
-        "[_NOUN]", random.choice(templates.nouns)
+        "[_NOUN]", random.choice(nouns).lower()
             ).replace(
-            "[_ADJ]", random.choice(templates.adjectives)
+            "[_ADJ]", random.choice(adjectives).lower()
             ).replace(
-            "[_PNOUN]", random.choice(templates.plural_nouns)
+            "[_VERB]", random.choice(verbs).lower()
             ).replace(
-            "[_VERB]", random.choice(templates.verbs)
+            "[_ADV]", random.choice(adverbs).lower()
             )
+    
+    return ' '.join(rnd_top.split()), ' '.join(rnd_bot.split())
 
-    return rnd_top, rnd_bot
 
 def serve_pil_image(pil_img):
     img_io = io.BytesIO()
