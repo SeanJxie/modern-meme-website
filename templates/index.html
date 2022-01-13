@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +19,6 @@
 </div>
 
 <script> 
-
     const cache = new Array;
     const cache_min_length = 10;
     const cache_check_interval = 1000; //milliseconds
@@ -45,7 +43,6 @@
 
     // so you can't request more memes while we're already generating memes
     var clicked_already = false
-
     async function replace_current_meme(){
         if (clicked_already){}
         else {
@@ -65,7 +62,6 @@
     // check every second if cache is not full enough, if so, generate some more memes.
     // sometimes generates extras, but its okay
     setInterval(add_meme_to_cache, cache_check_interval)
-
 </script>
 
 <div id='warning'>
