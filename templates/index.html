@@ -13,14 +13,20 @@
     <button type="submit" form="btnform" id="btn">NEW MEME</button>
 </div> 
 
-<div id='meme-container'>
-    {{image|safe}}
+<div id='final-meme'>
+
+    <div id='meme-container'>
+        {{image|safe}}
+    </div>    
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <script> 
     $('#btnform').on('submit', function(e){ 
         e.preventDefault(); 
+
+        $('#meme-container').html("<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'>")
+
         $.ajax({ 
             url: '/new_meme', 
             success: function(data) { 
