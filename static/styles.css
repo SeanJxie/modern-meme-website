@@ -43,12 +43,17 @@ body {
     margin: 25px;
 }
 
+#loading-icon{
+    left: 0;
+    margin: 25px;
+}
+
 #warning {
     user-select: none;
     line-height: 1;
-    position: absolute;
-    left: 0;
-    top: 0;
+    position: fixed;
+    left: 5px;
+    top: 5px;
     width: auto;
     padding: 1em;
     /* background: repeating-linear-gradient(45deg, blue 0 20px, red 20px 40px); */
@@ -63,4 +68,7 @@ body {
 #warning p {
     color: orangered;
     margin: 0.1em
+}
+#warning:hover {
+    opacity: 0.75;
 }
