@@ -23,14 +23,16 @@ def load_thread():
         threads.append(th)
         th.start()
 
+    print(f"Filled threads with {len(threads)} threads.")
 
 app_start = False
 
 @app.route('/')
 def index():
+    print(app_start)
     global app_start
     if not app_start:
-        print(app_start)
+        print("start load")
         load_thread()
         app_start = True
 
