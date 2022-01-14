@@ -22,7 +22,7 @@
 <script> 
     const cache = new Array;
     const cache_min_length = 10;
-    const cache_check_interval = 1000; //milliseconds
+    const cache_check_interval = 500; //milliseconds
 
     function get_new_meme(){
         return new Promise(function (resolve, reject){
@@ -53,13 +53,15 @@
         else {
             clicked_already = true
             document.getElementById('meme-container').innerHTML = "<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' id='loading-icon'>"
-            if (cache.length < 1){
-                const new_meme = await get_new_meme()
-                document.getElementById('meme-container').innerHTML = new_meme; 
+            
+            // wait until there is at least 1 element in cache
+            while (cache.length < 1){
+                await new Promise(resolve => setTimeout(resolve, cache_check_interval));
             }
-            else {
-                document.getElementById('meme-container').innerHTML = cache.shift();
-            }
+
+            const new_meme = cache.shift();
+            document.getElementById('meme-container').innerHTML = new_meme;
+            
             clicked_already = false;
         }
     }
