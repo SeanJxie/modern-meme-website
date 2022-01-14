@@ -49,6 +49,7 @@ body {
 }
 
 #warning {
+    cursor: pointer;
     user-select: none;
     line-height: 1;
     position: fixed;
