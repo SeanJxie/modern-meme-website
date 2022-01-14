@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +9,7 @@
 <body>
 
 <div id='btn-container'>
-    <form method="get" id="btnform"></form>
-    <button type="submit" form="btnform" id="btn">NEW MEME</button>
+    <button type="submit" form="btnform" id="btn" onclick="replace_current_meme()">NEW MEME</button>
 </div> 
 
 <div id='final-meme'>
@@ -21,24 +19,67 @@
     </div>    
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <script> 
-    $('#btnform').on('submit', function(e){ 
-        e.preventDefault(); 
+    const cache = new Array;
+    const cache_min_length = 10;
+    const cache_check_interval = 500; //milliseconds
 
-        $('#meme-container').html("<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' id='loading-icon'>")
+    function get_new_meme(){
+        return new Promise(function (resolve, reject){
+            req = new XMLHttpRequest();
+            req.open('GET', '/new_meme');
+            req.onload = function(){
+                try {
+                    const data = JSON.parse(this.responseText)
+                    resolve(data.meme)
+                }
+                catch(e) {
+                    reject(e)
+                }
+            }
+            req.send();
+        })
+    }
 
-        $.ajax({ 
-            url: '/new_meme', 
-            success: function(data) { 
-                $('#meme-container').html(data.meme); 
-            } 
-        }); 
-    }); 
+    async function add_meme_to_cache(){
+        if (cache.length < cache_min_length){ // so only generate when cache is short enough and when not already generating a meme for the current meme
+            try {
+                const result = await get_new_meme();
+                cache.push(result);
+            }
+            catch(e) { // should only crop up if get_new_meme rejects
+                console.log("An error occurred.")
+            }
+        }
+    }
+
+    // so you can't request more memes while we're already generating memes
+    var clicked_already = false
+    async function replace_current_meme(){
+        if (clicked_already){}
+        else {
+            clicked_already = true
+            document.getElementById('meme-container').innerHTML = "<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' id='loading-icon'>"
+            
+            // wait until there is at least 1 element in cache
+            while (cache.length < 1){
+                await new Promise(resolve => setTimeout(resolve, cache_check_interval));
+            }
+
+            const new_meme = cache.shift();
+            document.getElementById('meme-container').innerHTML = new_meme;
+            
+            clicked_already = false;
+        }
+    }
+    
+    // check every second if cache is not full enough, if so, generate some more memes.
+    // sometimes generates extras, but its okay
+    setInterval(add_meme_to_cache, cache_check_interval)
 </script>
 
-<div id='github-icon'>
-    <a href='https://github.com/SeanJxie/modern-meme-website/issues' title='Report issues here!'>
+<div id='github-icon-container'>
+    <a id='github-icon' href='https://github.com/SeanJxie/modern-meme-website/issues' title='Report issues here!'>
         <i class="fa fa-github" style="font-size:48px;color:white"></i>
     </a>
 </div>
@@ -50,3 +91,4 @@
 </div>
 
 </body>
+</html>
