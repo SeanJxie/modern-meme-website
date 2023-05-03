@@ -108,6 +108,11 @@
         {
             "top": "What the",
             "bot": "[_NOUN] doin?"
+        },
+        
+        {
+            "top": "Nahhhh dawg I'm getting outta the city",
+            "bot": ""
         }
     ]
 }
